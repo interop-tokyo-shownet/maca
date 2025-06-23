@@ -1,25 +1,25 @@
-# Macaddress
+# Maca
 
-`Macaddress` provides a set of methods to manipulate a MAC Address.
+maca provides a set of methods to manipulate a MAC Address.
 
 ## Installation
 
 Install the gem and add to the application's Gemfile by executing:
 
 ```bash
-bundle add macaddress
+bundle add maca
 ```
 
 If bundler is not being used to manage dependencies, install the gem by executing:
 
 ```bash
-gem install macaddress
+gem install maca
 ```
 
 ## Usage
 
 ```ruby
-require 'macaddress'
+require 'maca'
 
 Macaddress.new("00:00:00:00:00:00")
 => #<Macaddress @macaddress="00:00:00:00:00:00">
@@ -56,7 +56,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/interop-tokyo-shownet/macaddress-rb.
+Bug reports and pull requests are welcome on GitHub at https://github.com/interop-tokyo-shownet/maca.
 
 ## License
 
