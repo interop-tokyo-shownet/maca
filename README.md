@@ -31,14 +31,20 @@ Macaddress.new("01:23:45:67:89:ab").to_s
 Macaddress.new("00-00-00-00-00-00").to_s
 => "00:00:00:00:00:00"
 
-Macaddress.new("00.00.00.00.00.00").to_s
+Macaddress.new("000000000000").to_s
+=> "00:00:00:00:00:00"
+
+Macaddress.new("0000.0000.0000").to_s
+=> "00:00:00:00:00:00"
+
+Macaddress.new("000000-000000").to_s
 => "00:00:00:00:00:00"
 
 # Comparison
-Macaddress.new("00.00.00.00.00.00") == Macaddress.new("00.00.00.00.00.00")
+Macaddress.new("00:00:00:00:00:00") == Macaddress.new("00:00:00:00:00:00")
 => true
 
-Macaddress.new("00.00.00.00.00.00") == Macaddress.new("00.00.00.00.00.01")
+Macaddress.new("00:00:00:00:00:00") == Macaddress.new("00:00:00:00:00:01")
 => false
 ```
 
