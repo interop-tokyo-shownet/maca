@@ -62,4 +62,23 @@ RSpec.describe Macaddress do
       expect(Macaddress.new("00.00.00.00.00.00").to_s).to eq "00:00:00:00:00:00"
     end
   end
+
+  context "#==" do
+    it "return true with same address" do
+      expect(Macaddress.new("00:00:00:00:00:00") == Macaddress.new("00:00:00:00:00:00")).to be true
+    end
+
+    it "return false with different address" do
+      expect(Macaddress.new("00:00:00:00:00:00") == Macaddress.new("00:00:00:00:00:01")).to be false
+    end
+
+    it "return true when comparing values with different lowercase / uppercase letters" do
+      expect(Macaddress.new("aa:aa:aa:aa:aa:aa") == Macaddress.new("AA:AA:AA:AA:AA:AA")).to be true
+    end
+
+    it "return true with different delimiter" do
+      expect(Macaddress.new("00-00-00-00-00-00") == Macaddress.new("00:00:00:00:00:00")).to be true
+      expect(Macaddress.new("00.00.00.00.00.00") == Macaddress.new("00:00:00:00:00:00")).to be true
+    end
+  end
 end

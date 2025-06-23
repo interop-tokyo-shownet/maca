@@ -23,4 +23,8 @@ class Macaddress
   def to_s
     @macaddress.upcase.gsub("-", ":").gsub(".", ":")
   end
+
+  def ==(other)
+    self.to_s == other.to_s
+  end
 end
