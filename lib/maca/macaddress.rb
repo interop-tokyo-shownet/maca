@@ -20,6 +20,10 @@ module Maca
       @macaddress.upcase.scan(/.{1,2}/).join(':')
     end
 
+    def to_i
+      @macaddress.hex
+    end
+
     def ==(other)
       self.to_s == other.to_s
     end

@@ -88,6 +88,13 @@ RSpec.describe Macaddress do
     end
   end
 
+  context "#to_i" do
+    it "return decimal value of mac address" do
+      expect(Macaddress.new("00:00:00:00:00:00").to_i).to eq 0
+      expect(Macaddress.new("FF:FF:FF:FF:FF:FF").to_i).to eq 281474976710655
+    end
+  end
+
   context "#==" do
     it "return true with same address" do
       expect(Macaddress.new("00:00:00:00:00:00") == Macaddress.new("00:00:00:00:00:00")).to be true
