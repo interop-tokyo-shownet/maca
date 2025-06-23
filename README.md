@@ -40,6 +40,11 @@ Macaddress.new("0000.0000.0000").to_s
 Macaddress.new("000000-000000").to_s
 => "00:00:00:00:00:00"
 
+# Format conversion
+
+Macaddress.new("00-00-00-00-00-00").format(delimiter: '.', step: 4)
+=> "0000.0000.0000"
+
 # Comparison
 Macaddress.new("00:00:00:00:00:00") == Macaddress.new("00:00:00:00:00:00")
 => true

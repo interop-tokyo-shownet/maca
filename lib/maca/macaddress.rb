@@ -2,7 +2,10 @@
 
 module Maca
   class Macaddress
-    REGEXP_MACADDRESS = /^([0-9A-Fa-f]{2}[:.-]?){5}([0-9A-Fa-f]{2})$/
+    DEFAULT_DELIMITER = ':'
+    DEFAULT_STEP = 2
+    DELIMITERS = ':.-'
+    REGEXP_MACADDRESS = /^([0-9A-Fa-f]{2}[#{DELIMITERS}]?){5}([0-9A-Fa-f]{2})$/
 
     def initialize(addr)
       if Maca::Macaddress.valid?(addr)
@@ -17,7 +20,13 @@ module Maca
     end
 
     def to_s
-      @macaddress.upcase.gsub(/[-:.]/, '').scan(/.{1,2}/).join(':')
+      format
+    end
+
+    def format(delimiter: DEFAULT_DELIMITER, step: DEFAULT_STEP)
+      raise RangeError, "step must be even, and between 2 and 6" unless (2..6).cover?(step) && step.even?
+
+      @macaddress.upcase.gsub(/[#{DELIMITERS}]/, '').scan(/.{1,#{step}}/).join(delimiter)
     end
 
     def ==(other)
