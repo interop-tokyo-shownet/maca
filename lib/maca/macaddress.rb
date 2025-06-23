@@ -6,7 +6,7 @@ module Maca
 
     def initialize(addr)
       if Maca::Macaddress.valid?(addr)
-        @macaddress = addr
+        @macaddress = addr.downcase.gsub(/[-:.]/, '')
       else
         raise Maca::InvalidAddressError, "Invalid MAC Address #{addr}"
       end
@@ -17,7 +17,7 @@ module Maca
     end
 
     def to_s
-      @macaddress.upcase.gsub(/[-:.]/, '').scan(/.{1,2}/).join(':')
+      @macaddress.upcase.scan(/.{1,2}/).join(':')
     end
 
     def ==(other)
