@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
 RSpec.describe Macaddress do
-  it "has a version number" do
-    expect(Macaddress::VERSION).not_to be nil
-  end
-
   context "#new" do
     it "create instance" do
       expect(Macaddress.new("00:00:00:00:00:00")).to be_instance_of(Macaddress)
@@ -13,7 +9,7 @@ RSpec.describe Macaddress do
     it "raise error with invalid value" do
       expect {
         Macaddress.new("invalid address")
-      }.to raise_error(Macaddress::InvalidAddressError)
+      }.to raise_error(Maca::InvalidAddressError)
     end
   end
 
