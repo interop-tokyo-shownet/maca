@@ -18,24 +18,41 @@ RSpec.describe Macaddress do
   end
 
   context "#valid?" do
-    it "return ture with valid value" do
+    it "return true with valid value" do
       expect(Macaddress.valid?("00:00:00:00:00:00")).to be true
       expect(Macaddress.valid?("99:99:99:99:99:99")).to be true
       expect(Macaddress.valid?("aa:aa:aa:aa:aa:aa")).to be true
       expect(Macaddress.valid?("FF:FF:FF:FF:FF:FF")).to be true
     end
 
-    it "return ture when the delimiter is '-'" do
+    it "return true when the delimiter is '-'" do
       expect(Macaddress.valid?("00-00-00-00-00-00")).to be true
     end
 
-    it "return ture when the delimiter is '.'" do
+    it "return true when the delimiter is '.'" do
       expect(Macaddress.valid?("00.00.00.00.00.00")).to be true
+    end
+
+    it "return true when the delimiter is nothing" do
+      expect(Macaddress.valid?("000000000000")).to be true
+    end
+
+    it "return true when the delimiter is '.' and step is 4" do
+      expect(Macaddress.valid?("0000.0000.0000")).to be true
+    end
+
+    it "return true when the delimiter is '-' and step is 6" do
+      expect(Macaddress.valid?("000000-000000")).to be true
     end
 
     it "return false with non-hexadecimal value" do
       expect(Macaddress.valid?("0g:00:00:00:00:00")).to be false
       expect(Macaddress.valid?("00:00:00:00:00:G0")).to be false
+    end
+
+    it "return false with strange delimiter position" do
+      expect(Macaddress.valid?("000:000:000:000")).to be false
+      expect(Macaddress.valid?("0.0.0.0.0.0.0.0.0.0.0.0")).to be false
     end
 
     it "return false with invalid value" do
@@ -61,6 +78,18 @@ RSpec.describe Macaddress do
     it "return value with the delimiter replaced from '.' to ':'" do
       expect(Macaddress.new("00.00.00.00.00.00").to_s).to eq "00:00:00:00:00:00"
     end
+
+    it "return value with the delimiter ':' when delimiter is nothing " do
+      expect(Macaddress.new("000000000000").to_s).to eq "00:00:00:00:00:00"
+    end
+
+    it "return value with the delimiter ':' when delimiter is '.' and step is 4" do
+      expect(Macaddress.new("0000.0000.0000").to_s).to eq "00:00:00:00:00:00"
+    end
+
+    it "return value with the delimiter ':' when delimiter is '-' and step is 6" do
+      expect(Macaddress.new("000000-000000").to_s).to eq "00:00:00:00:00:00"
+    end
   end
 
   context "#==" do
@@ -79,6 +108,9 @@ RSpec.describe Macaddress do
     it "return true with different delimiter" do
       expect(Macaddress.new("00-00-00-00-00-00") == Macaddress.new("00:00:00:00:00:00")).to be true
       expect(Macaddress.new("00.00.00.00.00.00") == Macaddress.new("00:00:00:00:00:00")).to be true
+      expect(Macaddress.new("000000000000") == Macaddress.new("00:00:00:00:00:00")).to be true
+      expect(Macaddress.new("0000.0000.0000") == Macaddress.new("00:00:00:00:00:00")).to be true
+      expect(Macaddress.new("000000-000000") == Macaddress.new("00:00:00:00:00:00")).to be true
     end
   end
 end

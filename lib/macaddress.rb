@@ -6,7 +6,7 @@ class Macaddress
   class Error < StandardError; end
   class InvalidAddressError < ArgumentError; end
 
-  REGEXP_MACADDRESS = /^([0-9A-Fa-f]{2}[:.-]){5}([0-9A-Fa-f]{2})$/
+  REGEXP_MACADDRESS = /^([0-9A-Fa-f]{2}[:.-]?){5}([0-9A-Fa-f]{2})$/
 
   def initialize(addr)
     if Macaddress.valid?(addr)
@@ -21,7 +21,7 @@ class Macaddress
   end
 
   def to_s
-    @macaddress.upcase.gsub("-", ":").gsub(".", ":")
+    @macaddress.upcase.gsub(/[-:.]/, '').scan(/.{1,2}/).join(':')
   end
 
   def ==(other)
