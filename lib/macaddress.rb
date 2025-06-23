@@ -21,6 +21,6 @@ class Macaddress
   end
 
   def to_s
-    @macaddress
+    @macaddress.upcase.gsub("-", ":").gsub(".", ":")
   end
 end

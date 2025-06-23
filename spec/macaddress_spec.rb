@@ -42,4 +42,24 @@ RSpec.describe Macaddress do
       expect(Macaddress.valid?("invalid value")).to be false
     end
   end
+
+  context "#to_s" do
+    it "return mac address" do
+      expect(Macaddress.new("00:00:00:00:00:00").to_s).to eq "00:00:00:00:00:00"
+      expect(Macaddress.new("99:99:99:99:99:99").to_s).to eq "99:99:99:99:99:99"
+      expect(Macaddress.new("FF:FF:FF:FF:FF:FF").to_s).to eq "FF:FF:FF:FF:FF:FF"
+    end
+
+    it "return value with lowercase letters replaced by uppercase letters" do
+      expect(Macaddress.new("aa:aa:aa:aa:aa:aa").to_s).to eq "AA:AA:AA:AA:AA:AA"
+    end
+
+    it "return value with the delimiter replaced from '-' to ':'" do
+      expect(Macaddress.new("00-00-00-00-00-00").to_s).to eq "00:00:00:00:00:00"
+    end
+
+    it "return value with the delimiter replaced from '.' to ':'" do
+      expect(Macaddress.new("00.00.00.00.00.00").to_s).to eq "00:00:00:00:00:00"
+    end
+  end
 end
