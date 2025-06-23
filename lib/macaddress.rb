@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class Macaddress
-  VERSION = "0.1.0"
-
   class Error < StandardError; end
   class InvalidAddressError < ArgumentError; end
 

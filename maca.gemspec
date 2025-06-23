@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require_relative "lib/maca"
+require_relative "lib/maca/version"
 
 Gem::Specification.new do |spec|
   spec.name = "maca"
-  spec.version = Macaddress::VERSION
+  spec.version = Maca::VERSION
   spec.authors = ["Taketo Takashima"]
   spec.email = ["t.taketo1113@gmail.com"]
 
