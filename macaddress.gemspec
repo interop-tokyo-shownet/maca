@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "lib/macaddress/version"
+require_relative "lib/macaddress"
 
 Gem::Specification.new do |spec|
   spec.name = "macaddress"
