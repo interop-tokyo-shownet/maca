@@ -17,6 +17,9 @@ gem install maca
 ```
 
 ## Usage
+### Basic
+
+Create a new `Macaddress` object from a MAC Address in various formats.
 
 ```ruby
 require 'maca'
@@ -29,8 +32,15 @@ Macaddress.new("01:23:45:67:89:ab").to_s
 
 Macaddress.new("01:23:45:67:89:ab").to_i
 => 1250999896491
+```
 
-# Format normalization
+### Format String
+
+**Format Normalization**
+
+Normalize various MAC Address notations (hyphenated, dot-separated, raw hex, etc.) into the standard colon-separated format.
+
+```ruby
 Macaddress.new("00-00-00-00-00-00").to_s
 => "00:00:00:00:00:00"
 
@@ -42,13 +52,22 @@ Macaddress.new("0000.0000.0000").to_s
 
 Macaddress.new("000000-000000").to_s
 => "00:00:00:00:00:00"
+```
 
-# Format conversion
+**Format Conversion**
 
-Macaddress.new("00-00-00-00-00-00").format(delimiter: '.', step: 4)
+Convert the MAC Address to a custom string format using a specified delimiter and step size.
+
+```ruby
+Macaddress.new("00-00-00-00-00-00").to_fs(delimiter: '.', step: 4)
 => "0000.0000.0000"
+```
 
-# Comparison
+### Comparison
+
+Compare `Macaddress` objects for equality based on their normalized form.
+
+```ruby
 Macaddress.new("00:00:00:00:00:00") == Macaddress.new("00:00:00:00:00:00")
 => true
 
