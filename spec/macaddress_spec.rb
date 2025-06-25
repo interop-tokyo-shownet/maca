@@ -111,7 +111,13 @@ RSpec.describe Macaddress do
       expect{Macaddress.new("00:00:00:00:00:00").format(step: 5)}.to raise_error(RangeError)
       expect{Macaddress.new("00:00:00:00:00:00").format(step: 7)}.to raise_error(RangeError)
     end
+  end
 
+  context "#to_i" do
+    it "return decimal value of mac address" do
+      expect(Macaddress.new("00:00:00:00:00:00").to_i).to eq 0
+      expect(Macaddress.new("FF:FF:FF:FF:FF:FF").to_i).to eq 281474976710655
+    end
   end
 
   context "#==" do

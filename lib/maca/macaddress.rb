@@ -9,7 +9,7 @@ module Maca
 
     def initialize(addr)
       if Maca::Macaddress.valid?(addr)
-        @macaddress = addr
+        @macaddress = addr.downcase.gsub(/[-:.]/, '')
       else
         raise Maca::InvalidAddressError, "Invalid MAC Address #{addr}"
       end
@@ -26,7 +26,11 @@ module Maca
     def format(delimiter: DEFAULT_DELIMITER, step: DEFAULT_STEP)
       raise RangeError, "step must be even, and between 2 and 6" unless (2..6).cover?(step) && step.even?
 
-      @macaddress.upcase.gsub(/[#{DELIMITERS}]/, '').scan(/.{1,#{step}}/).join(delimiter)
+      @macaddress.upcase.scan(/.{1,#{step}}/).join(delimiter)
+    end
+
+    def to_i
+      @macaddress.hex
     end
 
     def ==(other)

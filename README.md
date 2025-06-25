@@ -21,11 +21,14 @@ gem install maca
 ```ruby
 require 'maca'
 
-Macaddress.new("00:00:00:00:00:00")
-=> #<Macaddress @macaddress="00:00:00:00:00:00">
+Macaddress.new("01:23:45:67:89:ab")
+=> #<Macaddress:0x000000012073db08 @macaddress="0123456789ab">
 
 Macaddress.new("01:23:45:67:89:ab").to_s
 => "01:23:45:67:89:AB"
+
+Macaddress.new("01:23:45:67:89:ab").to_i
+=> 1250999896491
 
 # Format normalization
 Macaddress.new("00-00-00-00-00-00").to_s
