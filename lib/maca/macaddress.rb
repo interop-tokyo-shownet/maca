@@ -20,14 +20,15 @@ module Maca
     end
 
     def to_s
-      format
+      to_fs
     end
 
-    def format(delimiter: DEFAULT_DELIMITER, step: DEFAULT_STEP)
+    def to_fs(delimiter: DEFAULT_DELIMITER, step: DEFAULT_STEP)
       raise RangeError, "step must be even, and between 2 and 6" unless (2..6).cover?(step) && step.even?
 
       @macaddress.upcase.scan(/.{1,#{step}}/).join(delimiter)
     end
+    alias_method :to_formatted_s, :to_fs
 
     def to_i
       @macaddress.hex
