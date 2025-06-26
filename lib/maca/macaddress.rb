@@ -9,7 +9,7 @@ module Maca
 
     def initialize(addr)
       if Maca::Macaddress.valid?(addr)
-        @macaddress = addr.downcase.gsub(/[-:.]/, '')
+        @macaddress = addr.downcase.delete(DELIMITERS)
       else
         raise Maca::InvalidAddressError, "Invalid MAC Address #{addr}"
       end
