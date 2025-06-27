@@ -89,6 +89,12 @@ Macaddress.new("33:33:00:00:00:01").multicast?
 
 Macaddress.new("02:00:00:00:00:00").locally_administered?
 => true
+
+Macaddress.new("01:00:00:00:00:00").universally_administered?
+=> true
+
+Macaddress.new("02:00:00:00:00:00").random?
+=> true
 ```
 
 ## Development
