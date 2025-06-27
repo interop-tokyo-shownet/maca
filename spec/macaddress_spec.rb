@@ -200,6 +200,28 @@ RSpec.describe Macaddress do
     end
   end
 
+  context "#random?" do
+    it "return true if mac address is unicast & local administered" do
+      expect(Macaddress.new("02:00:00:00:00:00").random?).to eq true
+      expect(Macaddress.new("06:00:00:00:00:00").random?).to eq true
+    end
+
+    it "return false if mac address is multicast & local administered" do
+      expect(Macaddress.new("03:00:00:00:00:00").random?).to eq false
+      expect(Macaddress.new("07:00:00:00:00:00").random?).to eq false
+    end
+
+    it "return false if mac address is unicast & universally administered" do
+      expect(Macaddress.new("00:00:00:00:00:00").random?).to eq false
+      expect(Macaddress.new("04:00:00:00:00:00").random?).to eq false
+    end
+
+    it "return false if mac address is multicast & universally administered" do
+      expect(Macaddress.new("01:00:00:00:00:00").random?).to eq false
+      expect(Macaddress.new("05:00:00:00:00:00").random?).to eq false
+    end
+  end
+
   context "#==" do
     it "return true with same address" do
       expect(Macaddress.new("00:00:00:00:00:00") == Macaddress.new("00:00:00:00:00:00")).to be true
