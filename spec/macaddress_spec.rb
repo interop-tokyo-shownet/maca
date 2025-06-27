@@ -120,6 +120,108 @@ RSpec.describe Macaddress do
     end
   end
 
+  context "#broadcast?" do
+    it "return true if mac address is broadcast" do
+      expect(Macaddress.new("ff:ff:ff:ff:ff:ff").broadcast?).to eq true
+    end
+
+    it "return false if mac address is multicast" do
+      expect(Macaddress.new("01:00:00:00:00:00").broadcast?).to eq false
+    end
+
+    it "return false if mac address is unicast" do
+      expect(Macaddress.new("00:00:00:00:00:00").broadcast?).to eq false
+    end
+  end
+
+  context "#multicast?" do
+    it "return true if mac address is broadcast" do
+      expect(Macaddress.new("ff:ff:ff:ff:ff:ff").multicast?).to eq true
+    end
+
+    it "return true if mac address is multicast" do
+      expect(Macaddress.new("01:00:00:00:00:00").multicast?).to eq true
+      expect(Macaddress.new("01:00:5E:00:00:00").multicast?).to eq true
+      expect(Macaddress.new("33:33:00:00:00:00").multicast?).to eq true
+      expect(Macaddress.new("05:00:00:00:00:00").multicast?).to eq true
+      expect(Macaddress.new("07:00:00:00:00:00").multicast?).to eq true
+    end
+
+    it "return false if mac address is unicast" do
+      expect(Macaddress.new("00:00:00:00:00:00").multicast?).to eq false
+    end
+  end
+
+  context "#unicast?" do
+    it "return true if mac address is unicast" do
+      expect(Macaddress.new("00:00:00:00:00:00").unicast?).to eq true
+      expect(Macaddress.new("02:00:00:00:00:00").unicast?).to eq true
+      expect(Macaddress.new("04:00:00:00:00:00").unicast?).to eq true
+      expect(Macaddress.new("06:00:00:00:00:00").unicast?).to eq true
+    end
+
+    it "return false if mac address is multicast" do
+      expect(Macaddress.new("01:00:00:00:00:00").unicast?).to eq false
+    end
+
+    it "return false if mac address is broadcast" do
+      expect(Macaddress.new("ff:ff:ff:ff:ff:ff").unicast?).to eq false
+    end
+  end
+
+  context "#locally_administered?" do
+    it "return true if mac address is local administered" do
+      expect(Macaddress.new("02:00:00:00:00:00").locally_administered?).to eq true
+      expect(Macaddress.new("03:00:00:00:00:00").locally_administered?).to eq true
+      expect(Macaddress.new("06:00:00:00:00:00").locally_administered?).to eq true
+      expect(Macaddress.new("07:00:00:00:00:00").locally_administered?).to eq true
+    end
+
+    it "return false if mac address is broadcast" do
+      expect(Macaddress.new("ff:ff:ff:ff:ff:ff").locally_administered?).to eq false
+    end
+
+    it "return false if mac address is not local administered" do
+      expect(Macaddress.new("01:00:00:00:00:00").locally_administered?).to eq false
+      expect(Macaddress.new("00:00:00:00:00:00").locally_administered?).to eq false
+    end
+  end
+
+  context "#universally_administered?" do
+    it "return true if mac address is universally administered" do
+      expect(Macaddress.new("00:00:00:00:00:00").universally_administered?).to eq true
+      expect(Macaddress.new("01:00:00:00:00:00").universally_administered?).to eq true
+      expect(Macaddress.new("04:00:00:00:00:00").universally_administered?).to eq true
+      expect(Macaddress.new("05:00:00:00:00:00").universally_administered?).to eq true
+    end
+
+    it "return false if mac address is local administered" do
+      expect(Macaddress.new("02:00:00:00:00:00").universally_administered?).to eq false
+    end
+  end
+
+  context "#random?" do
+    it "return true if mac address is unicast & local administered" do
+      expect(Macaddress.new("02:00:00:00:00:00").random?).to eq true
+      expect(Macaddress.new("06:00:00:00:00:00").random?).to eq true
+    end
+
+    it "return false if mac address is multicast & local administered" do
+      expect(Macaddress.new("03:00:00:00:00:00").random?).to eq false
+      expect(Macaddress.new("07:00:00:00:00:00").random?).to eq false
+    end
+
+    it "return false if mac address is unicast & universally administered" do
+      expect(Macaddress.new("00:00:00:00:00:00").random?).to eq false
+      expect(Macaddress.new("04:00:00:00:00:00").random?).to eq false
+    end
+
+    it "return false if mac address is multicast & universally administered" do
+      expect(Macaddress.new("01:00:00:00:00:00").random?).to eq false
+      expect(Macaddress.new("05:00:00:00:00:00").random?).to eq false
+    end
+  end
+
   context "#==" do
     it "return true with same address" do
       expect(Macaddress.new("00:00:00:00:00:00") == Macaddress.new("00:00:00:00:00:00")).to be true

@@ -75,6 +75,22 @@ Macaddress.new("00:00:00:00:00:00") == Macaddress.new("00:00:00:00:00:01")
 => false
 ```
 
+### Address type check
+
+```ruby
+Macaddress.new("00:00:00:00:00:00").unicast?
+=> true
+
+Macaddress.new("00:00:00:00:00:00").broadcast?
+=> false
+
+Macaddress.new("33:33:00:00:00:01").multicast?
+=> true
+
+Macaddress.new("02:00:00:00:00:00").locally_administered?
+=> true
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.

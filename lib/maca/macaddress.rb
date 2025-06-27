@@ -34,6 +34,31 @@ module Maca
       @macaddress.hex
     end
 
+    def broadcast?
+      @macaddress == 'ff' * 6
+    end
+
+    def multicast?
+      (@macaddress[0..1].hex & 0x01).positive?
+    end
+
+    def unicast?
+      !multicast?
+    end
+
+    def locally_administered?
+      return false if broadcast?
+      (@macaddress[0..1].hex & 0x02).positive?
+    end
+
+    def universally_administered?
+      !locally_administered?
+    end
+
+    def random?
+      unicast? && locally_administered?
+    end
+
     def ==(other)
       self.to_s == other.to_s
     end
