@@ -47,13 +47,16 @@ module Maca
     end
 
     def locally_administered?
-      return false if multicast?
+      return false if broadcast?
       (@macaddress[0..1].hex & 0x02).positive?
     end
-    alias_method :random?, :locally_administered?
 
     def universally_administered?
       !locally_administered?
+    end
+
+    def random?
+      unicast? && locally_administered?
     end
 
     def ==(other)
