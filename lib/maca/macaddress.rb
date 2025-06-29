@@ -5,7 +5,12 @@ module Maca
     DEFAULT_DELIMITER = ':'
     DEFAULT_STEP = 2
     DELIMITERS = ':.-'
-    REGEXP_MACADDRESS = /^([0-9A-Fa-f]{2}[#{DELIMITERS}]?){5}([0-9A-Fa-f]{2})$/
+    REGEXP_LIST_MACADDRESS = [
+      /^([0-9A-Fa-f]{2}[#{DELIMITERS}]){5}([0-9A-Fa-f]{2})$/, # xx:xx:xx:xx:xx:xx
+      /^([0-9A-Fa-f]{4}[#{DELIMITERS}]){2}([0-9A-Fa-f]{4})$/, # xxxx:xxxx:xxxx
+      /^([0-9A-Fa-f]{6}[#{DELIMITERS}]){1}([0-9A-Fa-f]{6})$/, # xxxxxx:xxxxxx
+      /^([0-9A-Fa-f]{12})$/, # xxxxxxxxxxxx
+    ]
 
     def initialize(addr)
       if Maca::Macaddress.valid?(addr)
@@ -16,7 +21,13 @@ module Maca
     end
 
     def self.valid?(addr)
-      REGEXP_MACADDRESS.match?(addr)
+      REGEXP_LIST_MACADDRESS.each do |regexp_macaddress|
+        if regexp_macaddress.match?(addr)
+          return true
+        end
+      end
+
+      false
     end
 
     def to_s

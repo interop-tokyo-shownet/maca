@@ -51,6 +51,11 @@ RSpec.describe Macaddress do
       expect(Macaddress.valid?("0.0.0.0.0.0.0.0.0.0.0.0")).to be false
     end
 
+    it "return false with when groups have inconsistent lengths" do
+      expect(Macaddress.valid?("00:00:00:00:0000")).to be false
+      expect(Macaddress.valid?("0000.0000.00.00")).to be false
+    end
+
     it "return false with invalid value" do
       expect(Macaddress.valid?("invalid value")).to be false
     end
