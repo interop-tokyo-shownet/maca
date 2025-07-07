@@ -97,6 +97,16 @@ Macaddress.new("02:00:00:00:00:00").random?
 => true
 ```
 
+### OUI
+
+```ruby
+Macaddress.new("00:00:00:00:00:00").oui # default format: :base16
+=> "000000"
+
+Macaddress.new("00:00:00:00:00:00").oui(format: :hex)
+=> "00-00-00"
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.

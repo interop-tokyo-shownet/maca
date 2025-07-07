@@ -227,6 +227,20 @@ RSpec.describe Macaddress do
     end
   end
 
+  context "#oui" do
+    it "return oui (default format: base 16)" do
+      expect(Macaddress.new("00:00:00:00:00:00").oui).to eq "000000"
+    end
+
+    it "return oui with format: base 16" do
+      expect(Macaddress.new("00:00:00:00:00:00").oui(format: :base16)).to eq "000000"
+    end
+
+    it "return oui with format: hex" do
+      expect(Macaddress.new("00:00:00:00:00:00").oui(format: :hex)).to eq "00-00-00"
+    end
+  end
+
   context "#==" do
     it "return true with same address" do
       expect(Macaddress.new("00:00:00:00:00:00") == Macaddress.new("00:00:00:00:00:00")).to be true
