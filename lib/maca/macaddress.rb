@@ -70,6 +70,19 @@ module Maca
       unicast? && locally_administered?
     end
 
+    def oui(format: :base16)
+      oui = @macaddress[0..5]
+
+      # format: base 16 (xxxxxx)
+      if format.to_s == "base16"
+        return oui.upcase
+      end
+
+      # default format: hex (xx-xx-xx)
+      delimiter = "-"
+      oui.upcase.scan(/.{1,2}/).join(delimiter)
+    end
+
     def ==(other)
       self.to_s == other.to_s
     end
