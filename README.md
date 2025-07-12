@@ -77,6 +77,8 @@ Macaddress.new("00:00:00:00:00:00") == Macaddress.new("00:00:00:00:00:01")
 
 ### Address type check
 
+Determine the type of a MAC address, such as whether it is unicast or multicast, and whether it is locally or universally administered.
+
 ```ruby
 Macaddress.new("00:00:00:00:00:00").unicast?
 => true
@@ -99,12 +101,16 @@ Macaddress.new("02:00:00:00:00:00").random?
 
 ### OUI
 
-```ruby
-Macaddress.new("00:00:00:00:00:00").oui # default format: :base16
-=> "000000"
+Extract the Organizationally Unique Identifier (OUI) from a MAC address.
 
-Macaddress.new("00:00:00:00:00:00").oui(format: :hex)
-=> "00-00-00"
+The `#oui` method returns the first 24 bits (or the first 3 octets) of a MAC Address, which typically identifies the device manufacturer or vendor.
+
+```ruby
+Macaddress.new("01:23:45:67:89:ab").oui # default format: :base16
+=> "012345"
+
+Macaddress.new("01:23:45:67:89:ab").oui(format: :hex)
+=> "01-23-45"
 ```
 
 ## Development
